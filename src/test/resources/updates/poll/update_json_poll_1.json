@@ -1,0 +1,50 @@
+{
+  "ok": true,
+  "result": {
+    "message_id": 1,
+    "from": {
+      "id": 1,
+      "is_bot": false,
+      "first_name": "user"
+    },
+    "senderChat": {
+      "id": 1,
+      "type": "regular",
+      "title": "yo-ho-ho",
+      "username": "user",
+      "first_name": "firstName",
+      "last_name": "last_name"
+    },
+    "date": 1234567,
+    "chat": {
+      "id": 2,
+      "type": "regular",
+      "title": "yo-ho-ho",
+      "username": "user2",
+      "first_name": "firstName2",
+      "last_name": "last_name2"
+    },
+    "poll": {
+      "id": 1,
+      "question": "question",
+      "options": [
+        {
+          "text": "option1",
+          "voter_count": 10
+        },
+        {
+          "text": "text2",
+          "voter_count": 15
+        }
+      ],
+      "total_voter_count": 25,
+      "is_closed": false,
+      "isAnonymous": false,
+      "type": "regular",
+      "allows_multiple_answers": false,
+      "explanation": "explanation",
+      "open_period": 1234,
+      "close_date": 5678
+    }
+  }
+}
