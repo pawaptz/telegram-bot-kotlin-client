@@ -2,9 +2,8 @@ package ru.tg.api.transport
 
 import com.google.gson.annotations.SerializedName
 import ru.tg.api.inlined.*
-import java.time.Duration
 
-data class TgUpdatesDto(val ok: Boolean, val result: Collection<TgUpdateDto>) {
+data class TgUpdatesDto(val ok: Boolean = true, val result: Collection<TgUpdateDto>) {
     fun lastUpdateId() = result.maxOf { it.updateId }
 }
 

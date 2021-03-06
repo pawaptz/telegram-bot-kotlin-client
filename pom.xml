@@ -4,24 +4,28 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>ru.tg.pawaptz</groupId>
     <artifactId>tg-bot-kotlin</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>tg-bot-kotlin-client</name>
+    <version>0.0.2-SNAPSHOT</version>
+    <name>tg-bot-kotlin</name>
     <description>Telegram bot client kotlin client</description>
     <packaging>jar</packaging>
 
     <properties>
-        <ver.kotlin>1.4.10</ver.kotlin>
-        <ver.kotlin.coroutines>1.4.2</ver.kotlin.coroutines>
+        <ver.kotlin>1.4.31</ver.kotlin>
+        <ver.kotlin.coroutines>1.4.3</ver.kotlin.coroutines>
         <ver.ok.http>4.9.1</ver.ok.http>
         <ver.jackson.kotlin>2.12.1</ver.jackson.kotlin>
-        <ver.assertj.core>3.19.0</ver.assertj.core>
+
         <ver.google.json>2.8.6</ver.google.json>
 
+        <ver.test.assertj.core>3.19.0</ver.test.assertj.core>
         <ver.test.junit>5.7.0</ver.test.junit>
+        <ver.test.mockk>1.10.6</ver.test.mockk>
+        <ver.test.awaitility>4.0.3</ver.test.awaitility>
 
-        <ver.plugin.kotlin>1.4.30</ver.plugin.kotlin>
+        <ver.plugin.kotlin>1.4.31</ver.plugin.kotlin>
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
 
     <dependencies>
         <dependency>
@@ -68,7 +72,19 @@
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
-            <version>${ver.assertj.core}</version>
+            <version>${ver.test.assertj.core}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.awaitility</groupId>
+            <artifactId>awaitility-kotlin</artifactId>
+            <version>4.0.3</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.mockk</groupId>
+            <artifactId>mockk</artifactId>
+            <version>${ver.test.mockk}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -80,7 +96,12 @@
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-maven-plugin</artifactId>
                 <version>${ver.plugin.kotlin}</version>
-
+                <configuration>
+                    <args>
+                        <arg>-Xjsr305=strict</arg>
+                        <arg>-Xinline-classes</arg>
+                    </args>
+                </configuration>
                 <executions>
                     <execution>
                         <id>compile</id>
@@ -88,7 +109,6 @@
                             <goal>compile</goal>
                         </goals>
                     </execution>
-
                     <execution>
                         <id>test-compile</id>
                         <goals>
@@ -115,6 +135,20 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <outputDirectory>${project.build}/sources/</outputDirectory>
+                    <finalName>tg-bot-kotlin-sources</finalName>
+                    <attach>true</attach>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
             </plugin>
         </plugins>
     </build>

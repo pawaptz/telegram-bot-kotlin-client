@@ -8,14 +8,12 @@ import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
 import ru.tg.api.poll.SendPollSerializerAdapter
-import ru.tg.api.transport.TgResponseDto
-import ru.tg.api.transport.TgUpdatesDto
 import java.io.IOException
 import java.time.Duration
 import java.util.concurrent.CompletableFuture
 import java.util.logging.Logger
 
-class TgBotApiImpl(token: String) : TgBotApi {
+internal class TgBotCallApiImpl(token: String) : TgBotCallApi {
 
     private val client = OkHttpClient.Builder().readTimeout(Duration.ofSeconds(50)).build()
     private val gson = GsonBuilder()
@@ -24,10 +22,10 @@ class TgBotApiImpl(token: String) : TgBotApi {
     private val baseUrl = "https://api.telegram.org/bot$token"
 
     companion object {
-        private val log = Logger.getLogger(TgBotApiImpl::class.simpleName)
+        private val log = Logger.getLogger(TgBotCallApiImpl::class.simpleName)
     }
 
-    private suspend fun <T> callApi(apiCall: TgApiCall<T>): T {
+    override suspend fun <T> callApi(apiCall: TgApiCall<T>): T {
         log.info("Calling bot API : ${apiCall.callName()}, with params: $apiCall")
         val request = prepareHttpRequest(apiCall)
         return execSuspend(request).parse(apiCall.responseType())
@@ -74,13 +72,5 @@ class TgBotApiImpl(token: String) : TgBotApi {
         }
 
         suspend fun await(): Response = cf.await()
-    }
-
-    override suspend fun sendPoll(dto: TgApiCall.SendPoll): TgResponseDto {
-        return callApi(dto)
-    }
-
-    override suspend fun getUpdates(dto: TgApiCall.GetUpdates): TgUpdatesDto {
-        return callApi(dto)
     }
 }
